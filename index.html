@@ -34,15 +34,23 @@
         <button type="button" name="run_command" id="run_command" value="Wykonaj">Wykonaj</button>
     </div>
     <script>
-        let AX, BX, CX, DX;
+        let AX, BX, CX, DX, BP, DI, SI, offset;
         AX = "1234H";
         BX = "0x1234";
         CX = "0x4321";
         DX = "4321H";
-        document.getElementById("AXVal").innerHTML = AX;
-        document.getElementById("BXVal").innerHTML = BX;
-        document.getElementById("CXVal").innerHTML = CX;
-        document.getElementById("DXVal").innerHTML = DX;
+        function UpdateGUI(){
+            document.getElementById("AXVal").innerHTML = AX;
+            document.getElementById("BXVal").innerHTML = BX;
+            document.getElementById("CXVal").innerHTML = CX;
+            document.getElementById("DXVal").innerHTML = DX;
+            document.getElementById("BPVal").innerHTML = BP;
+            document.getElementById("DIVal").innerHTML = DI;
+            document.getElementById("SIVal").innerHTML = SI;
+            document.getElementById("offsetVal").innerHTML = offset;
+        }
+
+        UpdateGUI();
     </script>
 </body>
 </html>

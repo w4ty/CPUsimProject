@@ -1,0 +1,7 @@
+.default_table{
+    border: 1px solid black;
+}
+.default_segment{
+    float: left;
+    padding: 32px;
+}

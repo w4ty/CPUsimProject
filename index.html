@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
-    <div id="variable_table">
-        <p>Wartości</p>
-        <table>
+    <div id="variable_table" class="default_segment">
+        <p>Tabela wartości</p>
+        <table class="default_table">
             <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th><th>BP</th><th>DI</th><th>SI</th><th>offset</th></tr>
             <tr>
                 <td id="ax_val"></td>
@@ -22,7 +23,7 @@
             </tr>
         </table>
     </div>
-    <div id="operations">
+    <div id="operations" class="default_segment">
         <select name="commands" id="commands">
             <option value="MOV">MOV</option>
             <option value="XCHG">XCHG</option>
@@ -32,6 +33,8 @@
         <input type="text" name="arg_first" id="arg_first">
         <input type="text" name="arg_second" id="arg_second">
         <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand()">Wykonaj</button><br>
+    </div>
+    <div id="log" class="default_segment">
         <p id="status_message">Status operacji: </p><span id="operation_return"></span>
     </div>
     <script>

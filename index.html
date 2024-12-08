@@ -11,14 +11,14 @@
         <table>
             <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th><th>BP</th><th>DI</th><th>SI</th><th>offset</th></tr>
             <tr>
-                <td id="AXVal"></td>
-                <td id="BXVal"></td>
-                <td id="CXVal"></td>
-                <td id="DXVal"></td>
-                <td id="BPVal"></td>
-                <td id="DIVal"></td>
-                <td id="SIVal"></td>
-                <td id="offsetVal"></td>
+                <td id="ax_val"></td>
+                <td id="bx_val"></td>
+                <td id="cx_val"></td>
+                <td id="dx_val"></td>
+                <td id="bp_val"></td>
+                <td id="di_val"></td>
+                <td id="si_val"></td>
+                <td id="offset_val"></td>
             </tr>
         </table>
     </div>
@@ -31,7 +31,7 @@
         </select>
         <input type="text" name="arg_first" id="arg_first">
         <input type="text" name="arg_second" id="arg_second">
-        <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="RunCommand()">Wykonaj</button><br>
+        <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand()">Wykonaj</button><br>
         <p id="status_message">Status operacji: </p><span id="operation_return"></span>
     </div>
     <script>
@@ -40,25 +40,25 @@
         BX = "0x1234";
         CX = "0x4321";
         DX = "4321H";
-        function SetOperationMessage(message){
+        function setOperationMessage(message){
             document.getElementById("operation_return").innerHTML += message + "<br>";
         }
-        function UpdateGUI(){
-            document.getElementById("AXVal").innerHTML = AX;
-            document.getElementById("BXVal").innerHTML = BX;
-            document.getElementById("CXVal").innerHTML = CX;
-            document.getElementById("DXVal").innerHTML = DX;
-            document.getElementById("BPVal").innerHTML = BP;
-            document.getElementById("DIVal").innerHTML = DI;
-            document.getElementById("SIVal").innerHTML = SI;
-            document.getElementById("offsetVal").innerHTML = offset;
-            SetOperationMessage("ran GUI update");
+        function updateGUI(){
+            document.getElementById("ax_val").innerHTML = AX;
+            document.getElementById("bx_val").innerHTML = BX;
+            document.getElementById("cx_val").innerHTML = CX;
+            document.getElementById("dx_val").innerHTML = DX;
+            document.getElementById("bp_val").innerHTML = BP;
+            document.getElementById("di_val").innerHTML = DI;
+            document.getElementById("si_val").innerHTML = SI;
+            document.getElementById("offset_val").innerHTML = offset;
+            setOperationMessage("ran GUI update");
         }
-        function RunCommand(){
-            SetOperationMessage("ran user command");
-            UpdateGUI();
+        function runCommand(){
+            setOperationMessage("ran user command");
+            updateGUI();
         }
-        UpdateGUI();
+        updateGUI();
     </script>
 </body>
 </html>

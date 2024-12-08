@@ -6,6 +6,20 @@
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
-    
+    <table>
+        <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
+        <tr><td id="AXVal"></td><td id="BXVal"></td><td id="CXVal"></td><td id="DXVal"></td></tr>
+    </table>
+    <script>
+        let AX, BX, CX, DX;
+        AX = "1234H";
+        BX = "0x1234";
+        CX = "0x4321";
+        DX = "4321H";
+        document.getElementById("AXVal").innerHTML = AX;
+        document.getElementById("BXVal").innerHTML = BX;
+        document.getElementById("CXVal").innerHTML = CX;
+        document.getElementById("DXVal").innerHTML = DX;
+    </script>
 </body>
 </html>

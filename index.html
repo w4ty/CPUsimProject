@@ -31,7 +31,8 @@
         </select>
         <input type="text" name="arg_first" id="arg_first">
         <input type="text" name="arg_second" id="arg_second">
-        <button type="button" name="run_command" id="run_command" value="Wykonaj">Wykonaj</button>
+        <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="RunCommand()">Wykonaj</button><br>
+        <p id="status_message">Status operacji: </p><span id="operation_return"></span>
     </div>
     <script>
         let AX, BX, CX, DX, BP, DI, SI, offset;
@@ -39,6 +40,9 @@
         BX = "0x1234";
         CX = "0x4321";
         DX = "4321H";
+        function SetOperationMessage(message){
+            document.getElementById("operation_return").innerHTML += message + "<br>";
+        }
         function UpdateGUI(){
             document.getElementById("AXVal").innerHTML = AX;
             document.getElementById("BXVal").innerHTML = BX;
@@ -48,8 +52,12 @@
             document.getElementById("DIVal").innerHTML = DI;
             document.getElementById("SIVal").innerHTML = SI;
             document.getElementById("offsetVal").innerHTML = offset;
+            SetOperationMessage("ran GUI update");
         }
-
+        function RunCommand(){
+            SetOperationMessage("ran user command");
+            UpdateGUI();
+        }
         UpdateGUI();
     </script>
 </body>

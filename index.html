@@ -6,10 +6,23 @@
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
-    <table>
-        <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
-        <tr><td id="AXVal"></td><td id="BXVal"></td><td id="CXVal"></td><td id="DXVal"></td></tr>
-    </table>
+    <div id="registry">
+        <p>Rejestry</p>
+        <table>
+            <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
+            <tr><td id="AXVal"></td><td id="BXVal"></td><td id="CXVal"></td><td id="DXVal"></td></tr>
+        </table>
+    </div>
+    <div id="operations">
+        <select name="commands" id="commands">
+            <option value="MOV">MOV</option>
+            <option value="XCHG">XCHG</option>
+            <option value="PUSH">PUSH</option>
+            <option value="POP">POP</option>
+        </select>
+        <input type="text" name="arg_first" id="arg_first">
+        <input type="text" name="arg_second" id="arg_second">
+    </div>
     <script>
         let AX, BX, CX, DX;
         AX = "1234H";

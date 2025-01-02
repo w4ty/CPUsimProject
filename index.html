@@ -8,78 +8,78 @@
 </head>
 <body>
     <h2>Projekt zaliczeniowy - Bruno Talaga</h2>
-    <div id="variable_table" class="default_segment">
-        <p>Tabela wartości</p>
-        <table class="default_table">
-            <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
-            <tr>
-                <td id="ax_val"></td>
-                <td id="bx_val"></td>
-                <td id="cx_val"></td>
-                <td id="dx_val"></td>
-            </tr>
-        </table>
-        <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
-        <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)">Wypełnij losowo</button>
-        <table class="default_table">
-            <tr>
-                <th>BP</th>
-                <th>DI</th>
-                <th>SI</th>
-                <th>DISP</th>
-            </tr>
-            <tr>
-                <td id="bp_val"></td>
-                <td id="di_val"></td>
-                <td id="si_val"></td>
-                <td id="offset_val"></td>
-            </tr>
-        </table>
-        <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
-        <p>Stos: </p><span id="stack_return"></span>
-    </div>
-    <div id="operations" class="default_segment">
-        <p>Pole komend</p>
-        <select name="variable_help" id="variable_help">
-            <option value="AX">AX</option>
-            <option value="BX">BX</option>
-            <option value="CX">CX</option>
-            <option value="DX">DX</option>
-            <option value="BP">BP</option>
-            <option value="DI">DI</option>
-            <option value="SI">SI</option>
-            <option value="DISP">DISP</option>
-        </select>
-        <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">Wpisz rejestr jako pierwszy argument</button>
-        <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Wpisz rejestr jako drugi argument</button><br />
-        <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność argumentów</button><br />
-        <select name="commands" id="commands">
-            <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
-            <option value="XCHG" onclick="toggleSecondArg(true)">XCHG</option>
-            <option value="PUSH" onclick="toggleSecondArg(false)">PUSH</option>
-            <option value="POP" onclick="toggleSecondArg(false)">POP</option>
-        </select>
-        <input type="text" name="arg_first" id="arg_first">,
-        <input type="text" name="arg_second" id="arg_second">
-        <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br><br />
-        <p>Tryb adresowania pamięci: </p>
-        <input type="radio" name="memory_address_mode" id="mem_add_indeksowy" value="Indeksowy" onclick="updateMemoryRegSelection(this.value)" />
-        <label for="mem_add_indeksowy">Indeksowy</label>
-        <input type="radio" name="memory_address_mode" id="mem_add_bazowy" value="Bazowy" onclick="updateMemoryRegSelection(this.value)" />
-        <label for="mem_add_bazowy">Bazowy</label>
-        <input type="radio" name="memory_address_mode" id="mem_add_indeksowo-bazowy" value="Indeksowo-bazowy" onclick="updateMemoryRegSelection(this.value)" />
-        <label for="mem_add_indeksowo-bazowy">Indeksowo-bazowy</label><br /><br />
-        <select name="memory_reg_selection" id="memory_reg_selection">
-            <option value="Wybierz tryb adresacji">Wybierz tryb adresacji</option>
-        </select><br />
-        <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz adres jako pierwszy argument" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">Wpisz adres jako pierwszy argument</button>
-        <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz adres jako drugi argument</button><br />
-    </div>
-    <div id="log" class="default_segment">
-        <p id="status_message">Log operacji: </p><span id="operation_return"></span>
-    </div>
-    <div id="memory" class="default_segment">
-        <p id="memory_message">Pamięć: </p><span id="memory_return"></span>
+    <div class="grid-container">
+        <div id="variable_table" class="grid-item">
+            <p>Tabela wartości</p>
+            <table class="default_table">
+                <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
+                <tr>
+                    <td id="ax_val"></td>
+                    <td id="bx_val"></td>
+                    <td id="cx_val"></td>
+                    <td id="dx_val"></td>
+                </tr>
+            </table>
+            <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
+            <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)">Wypełnij losowo</button>
+            <table class="default_table">
+                <tr>
+                    <th>BP</th>
+                    <th>DI</th>
+                    <th>SI</th>
+                    <th>DISP</th>
+                </tr>
+                <tr>
+                    <td id="bp_val"></td>
+                    <td id="di_val"></td>
+                    <td id="si_val"></td>
+                    <td id="offset_val"></td>
+                </tr>
+            </table>
+            <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
+            <p>Stos: </p><div class="scroll-box"><span id="stack_return"></span></div>
+        </div>
+        <div id="operations" class="grid-item">
+            <p>Pole komend</p>
+            <select name="variable_help" id="variable_help">
+                <option value="AX">AX</option>
+                <option value="BX">BX</option>
+                <option value="CX">CX</option>
+                <option value="DX">DX</option>
+                <option value="BP">BP</option>
+                <option value="DI">DI</option>
+                <option value="SI">SI</option>
+                <option value="DISP">DISP</option>
+            </select>
+            <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">Ustaw 1szy argument</button>
+            <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Ustaw 2gi argument</button><br />
+            <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność argumentów</button><br />
+            <select name="commands" id="commands">
+                <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
+                <option value="XCHG" onclick="toggleSecondArg(true)">XCHG</option>
+                <option value="PUSH" onclick="toggleSecondArg(false)">PUSH</option>
+                <option value="POP" onclick="toggleSecondArg(false)">POP</option>
+            </select>
+            <input type="text" name="arg_first" id="arg_first">,
+            <input type="text" name="arg_second" id="arg_second">
+            <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br><br />
+            <p>Tryb adresowania pamięci: </p>
+            <input type="radio" name="memory_address_mode" id="mem_add_indeksowy" value="Indeksowy" onclick="updateMemoryRegSelection(this.value)" />
+            <label for="mem_add_indeksowy">Indeksowy</label>
+            <input type="radio" name="memory_address_mode" id="mem_add_bazowy" value="Bazowy" onclick="updateMemoryRegSelection(this.value)" />
+            <label for="mem_add_bazowy">Bazowy</label>
+            <input type="radio" name="memory_address_mode" id="mem_add_indeksowo-bazowy" value="Indeksowo-bazowy" onclick="updateMemoryRegSelection(this.value)" />
+            <label for="mem_add_indeksowo-bazowy">Indeksowo-bazowy</label><br /><br />
+            <select name="memory_reg_selection" id="memory_reg_selection">
+                <option value="Wybierz tryb adresacji">Wybierz tryb adresacji</option>
+            </select><br />
+            <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz adres jako pierwszy argument" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">Wpisz adres jako pierwszy argument</button>
+            <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz adres jako drugi argument</button><br />
+        </div>
+        <div id="log" class="grid-item">
+            <p id="status_message">Log operacji: </p><div class="scroll-box autoscroll"><span id="operation_return"></span></div>
+            <p id="memory_message">Pamięć: </p><div class="scroll-box autoscroll"><span id="memory_return"></span></div>
+        </div>
     </div>
     <script>
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
@@ -114,6 +114,10 @@
                 }
             }
             document.getElementById("stack_return").innerHTML = stackDisplay;
+
+            document.querySelectorAll(".autoscroll").forEach((element) => {
+                element.scrollTop = element.scrollHeight;
+            });
         }
         function runCommand(operation, argFirst, argSecond) {
             let valid = false;

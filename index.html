@@ -19,8 +19,8 @@
                 <td id="dx_val"></td>
             </tr>
         </table>
-        <button type="button" name="empty_second" id="empty_second" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
-        <button>WYPEŁNIJ LOSOWYMI</button>
+        <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
+        <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)">Wypełnij losowo</button>
         <table class="default_table">
             <tr><th>BP</th><th>DI</th><th>SI</th><th>DISP</th>
             </tr>
@@ -31,7 +31,7 @@
                 <td id="offset_val"></td>
             </tr>
         </table>
-        <button type="button" name="empty_second" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
+        <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
@@ -50,10 +50,6 @@
     </div>
     <script>
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
-        vars["AX"] = "0000";
-        vars["BX"] = "0000";
-        vars["CX"] = "0000";
-        vars["DX"] = "0000";
         hexRegex = /^[0-9a-fA-F]{1,4}$/;
         function setOperationMessage(message){
             document.getElementById("operation_return").innerHTML += message + "<br>";
@@ -97,10 +93,16 @@
         function emptyTable(tableId) {
             for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
                 runCommand("MOV", `${vars[i]}`, "0000");
-                console.log(vars[`${vars[i]}`]);
+            }
+        }
+        function randomizeTable(tableId) {
+            for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
+                runCommand("MOV", `${vars[i]}`, Math.floor(Math.random() * 65535).toString(16).padStart(4, '0'));
             }
         }
         console.log(vars);
+        emptyTable(0);
+        emptyTable(1);
         updateGUI();
     </script>
 </body>

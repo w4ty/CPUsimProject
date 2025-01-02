@@ -38,6 +38,19 @@
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
+        <select name="variable_help" id="variable_help">
+            <option value="AX">AX</option>
+            <option value="BX">BX</option>
+            <option value="CX">CX</option>
+            <option value="DX">DX</option>
+            <option value="BP">BP</option>
+            <option value="DI">DI</option>
+            <option value="SI">SI</option>
+            <option value="DISP">DISP</option>
+        </select>
+        <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">Wpisz jako pierwszy</button>
+        <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Wpisz jako drugi</button><br />
+        <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność</button><br />
         <select name="commands" id="commands">
             <option value="MOV">MOV</option>
             <option value="XCHG">XCHG</option>
@@ -46,7 +59,8 @@
         </select>
         <input type="text" name="arg_first" id="arg_first">,
         <input type="text" name="arg_second" id="arg_second">
-        <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br>
+        <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br><br />
+
     </div>
     <div id="log" class="default_segment">
         <p id="status_message">Log operacji: </p><span id="operation_return"></span>
@@ -170,6 +184,17 @@
                 runCommand("MOV", `${vars[i]}`, Math.floor(Math.random() * 65535).toString(16).padStart(4, '0'));
             }
         }
+
+        function insertVariableToInput(inputId, selectorId) {
+            document.getElementById(`${inputId}`).value = document.getElementById(`${selectorId}`).value;
+        }
+
+        function swapInputOrder() {
+            let temp = document.getElementById("arg_first").value;
+            document.getElementById("arg_first").value = document.getElementById("arg_second").value;
+            document.getElementById("arg_second").value = temp;
+        }
+
         console.log(vars);
         updateGUI();
     </script>

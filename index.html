@@ -36,6 +36,7 @@
             </tr>
         </table>
         <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
+        <p>Stos: </p><span>SP: </span><span id="stack_return"></span>
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
@@ -53,10 +54,10 @@
         <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Wpisz jako drugi</button><br />
         <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność</button><br />
         <select name="commands" id="commands">
-            <option value="MOV">MOV</option>
-            <option value="XCHG">XCHG</option>
-            <option value="PUSH">PUSH</option>
-            <option value="POP">POP</option>
+            <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
+            <option value="XCHG" onclick="toggleSecondArg(true)">XCHG</option>
+            <option value="PUSH" onclick="toggleSecondArg(false)">PUSH</option>
+            <option value="POP" onclick="toggleSecondArg(false)">POP</option>
         </select>
         <input type="text" name="arg_first" id="arg_first">,
         <input type="text" name="arg_second" id="arg_second">
@@ -82,6 +83,8 @@
     </div>
     <script>
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
+        let SP = 0;
+        stack = {};
 
         for (let i = 0; i < vars.length; i++) {
             vars[`${vars[i]}`] = "0000";
@@ -103,6 +106,7 @@
             document.getElementById("si_val").innerHTML = vars["SI"];
             document.getElementById("offset_val").innerHTML = vars["DISP"];
             document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
+            document.getElementById("stack_return").innerHTML = JSON.stringify(stack).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
         }
         function runCommand(operation, argFirst, argSecond) {
             let valid = false;
@@ -137,7 +141,17 @@
                         valid = true;
                     }
                 }
-                setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : checkIfPointer(argSecond) ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
+                if (operation == "PUSH") {
+                    stack = { ...stack, SP: vars[`${argFirst}`] };
+                    valid = true;
+                    setOperationMessage(`${operation} ${argFirst}`);
+                } else if (operation == "POP") {
+                    vars[`${argFirst}`] = stack[`${SP}`];
+                    valid = true;
+                    setOperationMessage(`${operation} ${argFirst}`);
+                } else {
+                    setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : checkIfPointer(argSecond) ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
+                }
                 updateGUI();
             }
             else if (checkIfPointer(argFirst)) {
@@ -243,6 +257,11 @@
                 }
             }
         }
+
+        function toggleSecondArg(on) {
+            document.getElementById("arg_second").disabled = !on;
+        }
+
         console.log(vars);
         updateGUI();
     </script>

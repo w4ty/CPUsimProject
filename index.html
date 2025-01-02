@@ -242,7 +242,7 @@
         }
         function randomizeTable(tableId) {
             for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
-                runCommand("MOV", `${vars[i]}`, Math.floor(Math.random() * 65535).toString(16).padStart(4, '0'));
+                runCommand("MOV", `${vars[i]}`, Math.floor(Math.random() * 65535).toString(16).toUpperCase().padStart(4, '0'));
             }
         }
 

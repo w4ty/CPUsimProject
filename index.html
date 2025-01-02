@@ -11,18 +11,27 @@
     <div id="variable_table" class="default_segment">
         <p>Tabela wartości</p>
         <table class="default_table">
-            <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th><th>BP</th><th>DI</th><th>SI</th><th>offset</th></tr>
+            <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
             <tr>
                 <td id="ax_val"></td>
                 <td id="bx_val"></td>
                 <td id="cx_val"></td>
                 <td id="dx_val"></td>
+            </tr>
+        </table>
+        <button type="button" name="empty_second" id="empty_second" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
+        <button>WYPEŁNIJ LOSOWYMI</button>
+        <table class="default_table">
+            <tr><th>BP</th><th>DI</th><th>SI</th><th>DISP</th>
+            </tr>
+            <tr>
                 <td id="bp_val"></td>
                 <td id="di_val"></td>
                 <td id="si_val"></td>
                 <td id="offset_val"></td>
             </tr>
         </table>
+        <button type="button" name="empty_second" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
@@ -32,7 +41,7 @@
             <option value="PUSH">PUSH</option>
             <option value="POP">POP</option>
         </select>
-        <input type="text" name="arg_first" id="arg_first">
+        <input type="text" name="arg_first" id="arg_first">,
         <input type="text" name="arg_second" id="arg_second">
         <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br>
     </div>
@@ -40,11 +49,11 @@
         <p id="status_message">Log operacji: </p><span id="operation_return"></span>
     </div>
     <script>
-        vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "offset"];
+        vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
         vars["AX"] = "0000";
         vars["BX"] = "0000";
         vars["CX"] = "0000";
-        vars["DX"] = "1234";
+        vars["DX"] = "0000";
         hexRegex = /^[0-9a-fA-F]{1,4}$/;
         function setOperationMessage(message){
             document.getElementById("operation_return").innerHTML += message + "<br>";
@@ -57,23 +66,39 @@
             document.getElementById("bp_val").innerHTML = vars["BP"];
             document.getElementById("di_val").innerHTML = vars["DI"];
             document.getElementById("si_val").innerHTML = vars["SI"];
-            document.getElementById("offset_val").innerHTML = vars["offset"];
+            document.getElementById("offset_val").innerHTML = vars["DISP"];
         }
         function runCommand(operation, argFirst, argSecond) {
             let present = false;
+            let invalidArg = argFirst;
             vars.every(varName => {
                 if (varName == argFirst) {
                     if (operation == "MOV") {
-                        vars[`${argFirst}`] = typeof(vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                        vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
                     }
-                    setOperationMessage(`${operation} ${argFirst} ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
+                    else if (operation == "XCHG") {
+                        if (typeof (vars[`${argSecond}`]) === "undefined") {
+                            invalidArg = argSecond;
+                            return false;
+                        }
+                        let temp = vars[`${argFirst}`];
+                        vars[`${argFirst}`] = vars[`${argSecond}`];
+                        vars[`${argSecond}`] = temp;
+                    }
+                    setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
                     updateGUI();
                     present = true;
                     return false;
                 }
                 return true;
             });
-            if (!present) setOperationMessage(`INVALID ARGUMENT \"${argFirst}\"`);
+            if (!present) setOperationMessage(`INVALID ARGUMENT \"${invalidArg}\"`);
+        }
+        function emptyTable(tableId) {
+            for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
+                runCommand("MOV", `${vars[i]}`, "0000");
+                console.log(vars[`${vars[i]}`]);
+            }
         }
         console.log(vars);
         updateGUI();

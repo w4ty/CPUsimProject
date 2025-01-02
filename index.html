@@ -32,6 +32,9 @@
             </tr>
         </table>
         <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
+        <div id="memory">
+            <p id="memory_message">Pamięć: </p><span id="memory_return"></span>
+        </div>
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
@@ -50,11 +53,17 @@
     </div>
     <script>
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
+
+        for (let i = 0; i < vars.length; i++) {
+            vars[`${vars[i]}`] = "0000";
+        }
+
+        memory = {};
         hexRegex = /^[0-9a-fA-F]{1,4}$/;
         function setOperationMessage(message){
             document.getElementById("operation_return").innerHTML += message + "<br>";
         }
-        function updateGUI(){
+        function updateGUI() {
             document.getElementById("ax_val").innerHTML = vars["AX"];
             document.getElementById("bx_val").innerHTML = vars["BX"];
             document.getElementById("cx_val").innerHTML = vars["CX"];
@@ -63,32 +72,62 @@
             document.getElementById("di_val").innerHTML = vars["DI"];
             document.getElementById("si_val").innerHTML = vars["SI"];
             document.getElementById("offset_val").innerHTML = vars["DISP"];
+            document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"","").replaceAll(",", "<br>");
         }
         function runCommand(operation, argFirst, argSecond) {
-            let present = false;
+            let valid = false;
             let invalidArg = argFirst;
-            vars.every(varName => {
-                if (varName == argFirst) {
+
+            if (typeof (vars[`${argFirst}`]) !== "undefined") {
+                if (operation == "MOV") {
+                    vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                }
+                else if (operation == "XCHG") {
+                    if (typeof (vars[`${argSecond}`]) === "undefined") {
+                        invalidArg = argSecond;
+                    }
+                    let temp = vars[`${argFirst}`];
+                    vars[`${argFirst}`] = vars[`${argSecond}`];
+                    vars[`${argSecond}`] = temp;
+                }
+                setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
+                updateGUI();
+                valid = true;
+            } else if (argFirst.slice(0, 1) === "[" && argFirst.slice(-1) === "]") {
+                valid = true;
+                let memoryAddress = hexMath(argFirst);
+                if (hexRegex.test(memoryAddress)) {
                     if (operation == "MOV") {
-                        vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                        memory[`${memoryAddress}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
                     }
                     else if (operation == "XCHG") {
-                        if (typeof (vars[`${argSecond}`]) === "undefined") {
+                        if (typeof (memory[`${memoryAddress}`]) === "undefined") {
                             invalidArg = argSecond;
-                            return false;
                         }
-                        let temp = vars[`${argFirst}`];
-                        vars[`${argFirst}`] = vars[`${argSecond}`];
+                        let temp = memory[`${memoryAddress}`];
+                        memory[`${memoryAddress}`] = vars[`${argSecond}`];
                         vars[`${argSecond}`] = temp;
                     }
                     setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
                     updateGUI();
-                    present = true;
-                    return false;
+                } else {
+                    setOperationMessage(`INVALID MEMORY ADDRESS \"${memoryAddress}\"`);
                 }
-                return true;
-            });
-            if (!present) setOperationMessage(`INVALID ARGUMENT \"${invalidArg}\"`);
+            }
+            if (!valid) setOperationMessage(`INVALID ARGUMENT \"${invalidArg}\"`);
+        }
+        function hexMath(calculation) {
+
+            calculation = calculation.replaceAll(" ", "").replaceAll("[", "").replaceAll("]", "");
+            components = calculation.split("+");
+            for (let i = 0; i < components.length; i++) {
+                if (typeof (vars[`${components[i].padStart(4, '0')}`]) !== "undefined") {
+                    components[i] = vars[`${components[i]}`];
+                }
+            }
+            calculation = components.reduce((a, b) => parseInt(a, 16) + parseInt(b, 16)).toString(16);
+            console.log(components);
+            return calculation.padStart(4, '0');
         }
         function emptyTable(tableId) {
             for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
@@ -101,8 +140,6 @@
             }
         }
         console.log(vars);
-        emptyTable(0);
-        emptyTable(1);
         updateGUI();
     </script>
 </body>

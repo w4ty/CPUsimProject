@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
@@ -20,8 +21,8 @@
                     <td id="dx_val"></td>
                 </tr>
             </table>
-            <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
-            <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)">Wypełnij losowo</button>
+            <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)"><span class="material-icons">delete</span></button>
+            <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)"><span class="material-icons">casino</span></button>
             <table class="default_table">
                 <tr>
                     <th>BP</th>
@@ -36,7 +37,7 @@
                     <td id="offset_val"></td>
                 </tr>
             </table>
-            <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
+            <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)"><span class="material-icons">delete</span></button>
             <p>Stos: </p><div class="scroll-box"><span id="stack_return"></span></div>
         </div>
         <div id="operations" class="grid-item">
@@ -51,18 +52,20 @@
                 <option value="SI">SI</option>
                 <option value="DISP">DISP</option>
             </select>
-            <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">Ustaw 1szy argument</button>
-            <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Ustaw 2gi argument</button><br />
-            <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność argumentów</button><br />
-            <select name="commands" id="commands">
-                <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
-                <option value="XCHG" onclick="toggleSecondArg(true)">XCHG</option>
-                <option value="PUSH" onclick="toggleSecondArg(false)">PUSH</option>
-                <option value="POP" onclick="toggleSecondArg(false)">POP</option>
-            </select>
-            <input type="text" name="arg_first" id="arg_first">,
-            <input type="text" name="arg_second" id="arg_second">
-            <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br><br />
+            <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)"><span class="material-icons">south_west</span></button>
+            <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)"><span class="material-icons">south_east</span></button><br />
+            <div>
+                <select name="commands" id="commands">
+                    <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
+                    <option value="XCHG" onclick="toggleSecondArg(true)">XCHG</option>
+                    <option value="PUSH" onclick="toggleSecondArg(false)">PUSH</option>
+                    <option value="POP" onclick="toggleSecondArg(false)">POP</option>
+                </select>
+                <input type="text" name="arg_first" id="arg_first">,
+                <input type="text" name="arg_second" id="arg_second">
+            </div>
+            <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()"><span class="material-icons">swap_horizontal_circle</span></button>
+            <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)"><span class="material-icons">play_circle</span></button>
             <p>Tryb adresowania pamięci: </p>
             <input type="radio" name="memory_address_mode" id="mem_add_indeksowy" value="Indeksowy" onclick="updateMemoryRegSelection(this.value)" />
             <label for="mem_add_indeksowy">Indeksowy</label>

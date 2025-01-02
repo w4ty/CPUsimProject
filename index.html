@@ -36,7 +36,7 @@
             </tr>
         </table>
         <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
-        <p>Stos: </p><span>SP: </span><span id="stack_return"></span>
+        <p>Stos: </p><span id="stack_return"></span>
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
@@ -83,7 +83,7 @@
     </div>
     <script>
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
-        let SP = 0;
+        let SP = 0xFFFE;
         stack = {};
 
         for (let i = 0; i < vars.length; i++) {
@@ -142,11 +142,19 @@
                     }
                 }
                 if (operation == "PUSH") {
-                    stack = { ...stack, SP: vars[`${argFirst}`] };
+                    SP -= 2;
+                    let value = vars[`${argFirst}`];
+                    stack[SP] = value.slice(2, 4);
+                    stack[SP + 1] = value.slice(0, 2);
                     valid = true;
                     setOperationMessage(`${operation} ${argFirst}`);
                 } else if (operation == "POP") {
-                    vars[`${argFirst}`] = stack[`${SP}`];
+                    let highByte = stack[SP + 1];
+                    let lowByte = stack[SP];
+                    vars[`${argFirst}`] = highByte + lowByte;
+                    delete stack[SP];
+                    delete stack[SP + 1];
+                    SP += 2;
                     valid = true;
                     setOperationMessage(`${operation} ${argFirst}`);
                 } else {

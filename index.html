@@ -59,7 +59,8 @@
         }
 
         memory = {};
-        hexRegex = /^[0-9a-fA-F]{1,4}$/;
+        hexRegex = /^[0-9a-fA-F]{4}$/;
+        namingRegex = /^[A-Z]+$/;
         function setOperationMessage(message){
             document.getElementById("operation_return").innerHTML += message + "<br>";
         }
@@ -78,50 +79,80 @@
             let valid = false;
             let invalidArg = argFirst;
 
-            if (typeof (vars[`${argFirst}`]) !== "undefined") {
+            if (typeof (vars[`${argFirst}`]) !== "undefined" && namingRegex.test(argFirst)) {
                 if (operation == "MOV") {
-                    vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                    if (!namingRegex.test(argSecond) && !hexRegex.test(argSecond) && !checkIfPointer(argSecond)) {
+                        console.log(`BAD SECOND ARG`)
+                        invalidArg = argSecond;
+                    } else {
+                        console.log(`${namingRegex.test(argSecond)} ${hexRegex.test(argSecond)}`)
+                        vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : checkIfPointer(argSecond) ? typeof (memory[`${hexMath(argSecond)}`]) !== "undefined" ? memory[`${hexMath(argSecond)}`] : "0000" : hexRegex.test(argSecond) ? argSecond : "0000";
+                        valid = true;
+                    }
                 }
                 else if (operation == "XCHG") {
-                    if (typeof (vars[`${argSecond}`]) === "undefined") {
-                        invalidArg = argSecond;
+                    if (checkIfPointer(argSecond) && typeof (memory[`${hexMath(argSecond)}`]) !== "undefined") {
+                        console.log(argSecond + " is pointer");
+                        let temp = memory[`${hexMath(argSecond)}`];
+                        memory[`${hexMath(argSecond)}`] = vars[`${argFirst}`];
+                        vars[`${argFirst}`] = temp;
+                        valid = true;
                     }
-                    let temp = vars[`${argFirst}`];
-                    vars[`${argFirst}`] = vars[`${argSecond}`];
-                    vars[`${argSecond}`] = temp;
+                    else if (!namingRegex.test(argSecond) || typeof (vars[`${argSecond}`]) === "undefined") {
+                        invalidArg = argSecond;
+                    } else {
+                        console.log(`${argSecond} is not pointer and is var`);
+                        let temp = vars[`${argFirst}`];
+                        vars[`${argFirst}`] = vars[`${argSecond}`];
+                        vars[`${argSecond}`] = temp;
+                        valid = true;
+                    }
                 }
-                setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
+                setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : checkIfPointer(argSecond) ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
                 updateGUI();
-                valid = true;
-            } else if (argFirst.slice(0, 1) === "[" && argFirst.slice(-1) === "]") {
-                valid = true;
+            }
+            else if (checkIfPointer(argFirst)) {
                 let memoryAddress = hexMath(argFirst);
                 if (hexRegex.test(memoryAddress)) {
                     if (operation == "MOV") {
-                        memory[`${memoryAddress}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                        if (!namingRegex.test(argSecond) && !hexRegex.test(argSecond) && !checkIfPointer(argSecond)) {
+                            console.log(`BAD SECOND ARG`)
+                            invalidArg = argSecond;
+                        } else {
+                            memory[`${memoryAddress}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                            valid = true;
+                        }
                     }
                     else if (operation == "XCHG") {
                         if (typeof (memory[`${memoryAddress}`]) === "undefined") {
                             invalidArg = argSecond;
+                        } else {
+                            let temp = memory[`${memoryAddress}`];
+                            memory[`${memoryAddress}`] = vars[`${argSecond}`];
+                            vars[`${argSecond}`] = temp;
+                            valid = true;
                         }
-                        let temp = memory[`${memoryAddress}`];
-                        memory[`${memoryAddress}`] = vars[`${argSecond}`];
-                        vars[`${argSecond}`] = temp;
                     }
                     setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
                     updateGUI();
-                } else {
+                }
+                else {
                     setOperationMessage(`INVALID MEMORY ADDRESS \"${memoryAddress}\"`);
                 }
             }
             if (!valid) setOperationMessage(`INVALID ARGUMENT \"${invalidArg}\"`);
         }
+
+        function checkIfPointer(arg) {
+            return arg.slice(0, 1) === "[" && arg.slice(-1) === "]";
+        }
+
         function hexMath(calculation) {
 
             calculation = calculation.replaceAll(" ", "").replaceAll("[", "").replaceAll("]", "");
             components = calculation.split("+");
             for (let i = 0; i < components.length; i++) {
-                if (typeof (vars[`${components[i].padStart(4, '0')}`]) !== "undefined") {
+                if ((typeof (vars[`${components[i]}`]) !== "undefined" && namingRegex.test(components[i]))) {
                     components[i] = vars[`${components[i]}`];
                 }
             }

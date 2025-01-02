@@ -118,9 +118,20 @@
                         console.log(`BAD SECOND ARG`)
                         invalidArg = argSecond;
                     } else {
-                        console.log(`${namingRegex.test(argSecond)} ${hexRegex.test(argSecond)}`)
-                        vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : checkIfPointer(argSecond) ? typeof (memory[`${hexMath(argSecond)}`]) !== "undefined" ? memory[`${hexMath(argSecond)}`] : "0000" : hexRegex.test(argSecond) ? argSecond : "0000";
-                        valid = true;
+                        if (checkIfPointer(argSecond)) {
+                            let memoryAddress = hexMath(argSecond);
+                            if (hexRegex.test(memoryAddress)) {
+                                let lowByte = memory[`${memoryAddress}`] || "00";
+                                let highByte = memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] || "00";
+                                vars[`${argFirst}`] = highByte + lowByte;
+                                valid = true;
+                            } else {
+                                invalidArg = argSecond;
+                            }
+                        } else {
+                            vars[`${argFirst}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                            valid = true;
+                        }
                     }
                 }
                 else if (operation == "XCHG") {
@@ -170,7 +181,9 @@
                             console.log(`BAD SECOND ARG`)
                             invalidArg = argSecond;
                         } else {
-                            memory[`${memoryAddress}`] = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                            let value = typeof (vars[`${argSecond}`]) !== "undefined" ? vars[`${argSecond}`] : hexRegex.test(argSecond) ? argSecond : "0000";
+                            memory[`${memoryAddress}`] = value.slice(2, 4);
+                            memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] = value.slice(0, 2);
                             valid = true;
                         }
                     }

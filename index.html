@@ -50,9 +50,9 @@
             <option value="SI">SI</option>
             <option value="DISP">DISP</option>
         </select>
-        <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">Wpisz jako pierwszy</button>
-        <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Wpisz jako drugi</button><br />
-        <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność</button><br />
+        <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">Wpisz rejestr jako pierwszy argument</button>
+        <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)">Wpisz rejestr jako drugi argument</button><br />
+        <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()">Zamień kolejność argumentów</button><br />
         <select name="commands" id="commands">
             <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
             <option value="XCHG" onclick="toggleSecondArg(true)">XCHG</option>
@@ -72,8 +72,8 @@
         <select name="memory_reg_selection" id="memory_reg_selection">
             <option value="Wybierz tryb adresacji">Wybierz tryb adresacji</option>
         </select><br />
-        <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz pointer jako pierwszy" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">Wpisz pointer jako pierwszy</button>
-        <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz pointer jako drugi" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz pointer jako drugi</button><br />
+        <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz adres jako pierwszy argument" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">Wpisz adres jako pierwszy argument</button>
+        <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz adres jako drugi argument</button><br />
     </div>
     <div id="log" class="default_segment">
         <p id="status_message">Log operacji: </p><span id="operation_return"></span>
@@ -106,7 +106,14 @@
             document.getElementById("si_val").innerHTML = vars["SI"];
             document.getElementById("offset_val").innerHTML = vars["DISP"];
             document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
-            document.getElementById("stack_return").innerHTML = JSON.stringify(stack).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
+
+            let stackDisplay = "";
+            for (let key in stack) {
+                if (stack.hasOwnProperty(key)) {
+                    stackDisplay += `${parseInt(key, 10).toString(16).toUpperCase().padStart(4, '0')}: ${stack[key]}<br>`;
+                }
+            }
+            document.getElementById("stack_return").innerHTML = stackDisplay;
         }
         function runCommand(operation, argFirst, argSecond) {
             let valid = false;

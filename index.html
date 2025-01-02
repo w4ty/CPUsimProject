@@ -22,7 +22,11 @@
         <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)">Wyzeruj</button>
         <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)">Wypełnij losowo</button>
         <table class="default_table">
-            <tr><th>BP</th><th>DI</th><th>SI</th><th>DISP</th>
+            <tr>
+                <th>BP</th>
+                <th>DI</th>
+                <th>SI</th>
+                <th>DISP</th>
             </tr>
             <tr>
                 <td id="bp_val"></td>
@@ -32,9 +36,6 @@
             </tr>
         </table>
         <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)">Wyzeruj</button>
-        <div id="memory">
-            <p id="memory_message">Pamięć: </p><span id="memory_return"></span>
-        </div>
     </div>
     <div id="operations" class="default_segment">
         <p>Pole komend</p>
@@ -60,10 +61,24 @@
         <input type="text" name="arg_first" id="arg_first">,
         <input type="text" name="arg_second" id="arg_second">
         <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)">Wykonaj</button><br><br />
-
+        <p>Tryb adresowania pamięci: </p>
+        <input type="radio" name="memory_address_mode" id="mem_add_indeksowy" value="Indeksowy" onclick="updateMemoryRegSelection(this.value)" />
+        <label for="mem_add_indeksowy">Indeksowy</label>
+        <input type="radio" name="memory_address_mode" id="mem_add_bazowy" value="Bazowy" onclick="updateMemoryRegSelection(this.value)" />
+        <label for="mem_add_bazowy">Bazowy</label>
+        <input type="radio" name="memory_address_mode" id="mem_add_indeksowo-bazowy" value="Indeksowo-bazowy" onclick="updateMemoryRegSelection(this.value)" />
+        <label for="mem_add_indeksowo-bazowy">Indeksowo-bazowy</label><br /><br />
+        <select name="memory_reg_selection" id="memory_reg_selection">
+            <option value="Wybierz tryb adresacji">Wybierz tryb adresacji</option>
+        </select><br />
+        <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz pointer jako pierwszy" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">Wpisz pointer jako pierwszy</button>
+        <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz pointer jako drugi" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz pointer jako drugi</button><br />
     </div>
     <div id="log" class="default_segment">
         <p id="status_message">Log operacji: </p><span id="operation_return"></span>
+    </div>
+    <div id="memory" class="default_segment">
+        <p id="memory_message">Pamięć: </p><span id="memory_return"></span>
     </div>
     <script>
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
@@ -75,7 +90,7 @@
         memory = {};
         hexRegex = /^[0-9a-fA-F]{4}$/;
         namingRegex = /^[A-Z]+$/;
-        function setOperationMessage(message){
+        function setOperationMessage(message) {
             document.getElementById("operation_return").innerHTML += message + "<br>";
         }
         function updateGUI() {
@@ -87,7 +102,7 @@
             document.getElementById("di_val").innerHTML = vars["DI"];
             document.getElementById("si_val").innerHTML = vars["SI"];
             document.getElementById("offset_val").innerHTML = vars["DISP"];
-            document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"","").replaceAll(",", "<br>");
+            document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
         }
         function runCommand(operation, argFirst, argSecond) {
             let valid = false;
@@ -185,8 +200,8 @@
             }
         }
 
-        function insertVariableToInput(inputId, selectorId) {
-            document.getElementById(`${inputId}`).value = document.getElementById(`${selectorId}`).value;
+        function insertVariableToInput(inputId, selectorId, isPointer = false) {
+            document.getElementById(`${inputId}`).value = `${isPointer ? "[" : ""}${document.getElementById(`${selectorId}`).value}${isPointer ? "+DISP]" : ""}`;
         }
 
         function swapInputOrder() {
@@ -195,6 +210,39 @@
             document.getElementById("arg_second").value = temp;
         }
 
+        function updateMemoryRegSelection(mode) {
+            options = {};
+            console.log(mode);
+
+            let memoryRegSelection = document.getElementById("memory_reg_selection");
+            memoryRegSelection.innerHTML = "";
+
+            switch (mode)
+            {
+                case "Indeksowy":
+                    console.log("Indeksowy");
+                    options = { "DI": "DI", "SI": "SI" };
+                    break;
+                case "Bazowy":
+                    options = { "BX": "BX", "BP": "BP" };
+                    break;
+                case "Indeksowo-bazowy":
+                    options = { "SI+BX": "SI+BX", "SI+BP": "SI+BP", "DI+BX": "DI+BX", "DI+BP": "DI+BP" };
+                    break;
+                default:
+                    options = { "Wybierz tryb adresacji": "Wybierz tryb adresacji" };
+                    break;
+            }
+            console.log(options.length);
+            for (let key in options) {
+                if (options.hasOwnProperty(key)) {
+                    let option = document.createElement("option");
+                    option.value = key;
+                    option.text = options[key];
+                    memoryRegSelection.add(option);
+                }
+            }
+        }
         console.log(vars);
         updateGUI();
     </script>

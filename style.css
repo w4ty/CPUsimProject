@@ -93,6 +93,7 @@ label {
 .material-symbols-outlined {
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24
 }
+
 .table-input {
     text-align: center;
     width: 50%;
@@ -100,4 +101,10 @@ label {
     margin: 5px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+}
+.centered-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }

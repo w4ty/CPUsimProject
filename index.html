@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=mop" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=mop&display=block" />
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
@@ -45,18 +45,22 @@
         </div>
         <div id="operations" class="grid-item">
             <p>Pole komend</p>
-            <select name="variable_help" id="variable_help">
-                <option value="AX">AX</option>
-                <option value="BX">BX</option>
-                <option value="CX">CX</option>
-                <option value="DX">DX</option>
-                <option value="BP">BP</option>
-                <option value="DI">DI</option>
-                <option value="SI">SI</option>
-                <option value="DISP">DISP</option>
-            </select>
-            <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">1<span class="material-icons">south_west</span></button>
-            <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)"><span class="material-icons">south_east</span>2</button><br />
+            <div class="centered-flex">
+                <select name="variable_help" id="variable_help">
+                    <option value="AX">AX</option>
+                    <option value="BX">BX</option>
+                    <option value="CX">CX</option>
+                    <option value="DX">DX</option>
+                    <option value="BP">BP</option>
+                    <option value="DI">DI</option>
+                    <option value="SI">SI</option>
+                    <option value="DISP">DISP</option>
+                </select>
+            </div>
+            <div class="centered-flex">
+                <button type="button" name="insert_arg" id="insert_first_arg" value="Wpisz jako pierwszy" onclick="insertVariableToInput(`arg_first`, `variable_help`)">1<span class="material-icons">south_west</span></button>
+                <button type="button" name="insert_arg" id="insert_second_arg" value="Wpisz jako drugi" onclick="insertVariableToInput(`arg_second`, `variable_help`)"><span class="material-icons">south_east</span>2</button><br />
+            </div>
             <div>
                 <select name="commands" id="commands">
                     <option value="MOV" onclick="toggleSecondArg(true)">MOV</option>
@@ -67,8 +71,10 @@
                 <input type="text" name="arg_first" id="arg_first">,
                 <input type="text" name="arg_second" id="arg_second">
             </div>
-            <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()"><span class="material-icons">swap_horizontal_circle</span></button>
-            <button type="button" name="run_command" id="run_command" value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)"><span class="material-icons">play_circle</span></button>
+            <div class="centered-flex">
+                <button type="button" name="swap_order" id="swap_order" value="Zamień kolejność" onclick="swapInputOrder()"><span class="material-icons">swap_horizontal_circle</span></button>
+                <button type="button" name="run_command" id="run_command"  value="Wykonaj" onclick="runCommand(document.getElementById(`commands`).value, document.getElementById(`arg_first`).value, document.getElementById(`arg_second`).value)"><span class="material-icons">play_circle</span></button>
+            </div>
             <p>Tryb adresowania pamięci: </p>
             <input type="radio" name="memory_address_mode" id="mem_add_indeksowy" value="Indeksowy" onclick="updateMemoryRegSelection(this.value)" />
             <label for="mem_add_indeksowy">Indeksowy</label>
@@ -76,11 +82,15 @@
             <label for="mem_add_bazowy">Bazowy</label>
             <input type="radio" name="memory_address_mode" id="mem_add_indeksowo-bazowy" value="Indeksowo-bazowy" onclick="updateMemoryRegSelection(this.value)" />
             <label for="mem_add_indeksowo-bazowy">Indeksowo-bazowy</label><br /><br />
-            <select name="memory_reg_selection" id="memory_reg_selection">
-                <option value="Wybierz tryb adresacji">Wybierz tryb adresacji</option>
-            </select><br />
-            <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz adres jako pierwszy argument" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">Wpisz adres jako pierwszy argument</button>
-            <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz adres jako drugi argument</button><br />
+            <div class="centered-flex">
+                <select name="memory_reg_selection" id="memory_reg_selection">
+                    <option value="Wybierz tryb adresacji">Wybierz tryb adresacji</option>
+                </select>
+            </div>
+            <div class="centered-flex">
+                <button type="button" name="insert_mem_add" id="insert_mem_add_first" value="Wpisz adres jako pierwszy argument" onclick="insertVariableToInput(`arg_first`, `memory_reg_selection`, true)">1 <span class="material-icons">memory</span></button>
+                <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)"><span class="material-icons">memory</span> 2</button>
+            </div>
         </div>
         <div id="log" class="grid-item">
             <p id="status_message">Log operacji: </p><div class="scroll-box autoscroll"><span id="operation_return"></span></div><button type="button" name="clear_operation_log" id="clear_operation_log" value="Wyczyść" onclick="clearOperationLog()"><span class="material-symbols-outlined">mop</span></button>

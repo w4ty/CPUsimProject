@@ -16,14 +16,15 @@
             <table class="default_table">
                 <tr><th>AX</th><th>BX</th><th>CX</th><th>DX</th></tr>
                 <tr>
-                    <td id="ax_val"></td>
-                    <td id="bx_val"></td>
-                    <td id="cx_val"></td>
-                    <td id="dx_val"></td>
+                    <td id="ax_val"><input type="text" name="table_input_0" id="table_input_0" class="table-input" maxlength="4"></td>
+                    <td id="bx_val"><input type="text" name="table_input_1" id="table_input_1" class="table-input" maxlength="4"></td>
+                    <td id="cx_val"><input type="text" name="table_input_2" id="table_input_2" class="table-input" maxlength="4"></td>
+                    <td id="dx_val"><input type="text" name="table_input_3" id="table_input_3" class="table-input" maxlength="4"></td>
                 </tr>
             </table>
-            <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="emptyTable(0)"><span class="material-icons">delete</span></button>
-            <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="randomizeTable(0)"><span class="material-icons">casino</span></button>
+            <button type="button" name="empty_table" id="empty_first" value="Wyzeruj" onclick="setTable(0)"><span class="material-icons">delete</span></button>
+            <button type="button" name="randomize_table" id="randomize_first" value="Wypełnij losowo" onclick="setTable(0, 1)"><span class="material-icons">casino</span></button>
+            <button type="button" name="fill_table" id="fill_first" value="Wypełnij" onclick="setTable(0, 2)"><span class="material-icons">edit</span></button>
             <table class="default_table">
                 <tr>
                     <th>BP</th>
@@ -32,13 +33,14 @@
                     <th>DISP</th>
                 </tr>
                 <tr>
-                    <td id="bp_val"></td>
-                    <td id="di_val"></td>
-                    <td id="si_val"></td>
-                    <td id="offset_val"></td>
+                    <td id="bp_val"><input type="text" name="table_input_4" id="table_input_4" class="table-input" maxlength="4"></td>
+                    <td id="di_val"><input type="text" name="table_input_5" id="table_input_5" class="table-input" maxlength="4"></td>
+                    <td id="si_val"><input type="text" name="table_input_6" id="table_input_6" class="table-input" maxlength="4"></td>
+                    <td id="offset_val"><input type="text" name="table_input_7" id="table_input_7" class="table-input" maxlength="4"></td>
                 </tr>
             </table>
-            <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)"><span class="material-icons">delete</span></button>
+            <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="setTable(1)"><span class="material-icons">delete</span></button>
+            <button type="button" name="fill_table" id="fill_second" value="Wypełnij" onclick="setTable(1, 2)"><span class="material-icons">edit</span></button>
             <p>Stos (wskaźnik: <span id="stack_pointer"></span>): </p><div class="scroll-box"><span id="stack_return"></span></div><button type="button" name="clear_stack" id="clear_stack" value="Wyczyść" onclick="clearObject(stack, `STACK`); resetStackPointer()"><span class="material-icons">delete</span></button>
         </div>
         <div id="operations" class="grid-item">
@@ -105,14 +107,14 @@
             document.getElementById("operation_return").innerHTML += message + "<br>";
         }
         function updateGUI() {
-            document.getElementById("ax_val").innerHTML = vars["AX"];
-            document.getElementById("bx_val").innerHTML = vars["BX"];
-            document.getElementById("cx_val").innerHTML = vars["CX"];
-            document.getElementById("dx_val").innerHTML = vars["DX"];
-            document.getElementById("bp_val").innerHTML = vars["BP"];
-            document.getElementById("di_val").innerHTML = vars["DI"];
-            document.getElementById("si_val").innerHTML = vars["SI"];
-            document.getElementById("offset_val").innerHTML = vars["DISP"];
+            document.getElementById("table_input_0").value = vars["AX"];
+            document.getElementById("table_input_1").value = vars["BX"];
+            document.getElementById("table_input_2").value = vars["CX"];
+            document.getElementById("table_input_3").value = vars["DX"];
+            document.getElementById("table_input_4").value = vars["BP"];
+            document.getElementById("table_input_5").value = vars["DI"];
+            document.getElementById("table_input_6").value = vars["SI"];
+            document.getElementById("table_input_7").value = vars["DISP"];
             document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
 
             let stackDisplay = "";
@@ -248,14 +250,33 @@
             console.log(components);
             return calculation.padStart(4, '0');
         }
-        function emptyTable(tableId) {
-            for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
-                runCommand("MOV", `${vars[i]}`, "0000");
-            }
-        }
-        function randomizeTable(tableId) {
-            for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
-                runCommand("MOV", `${vars[i]}`, Math.floor(Math.random() * 65535).toString(16).toUpperCase().padStart(4, '0'));
+        function setTable(tableId, mode = 0) {
+            switch (mode) {
+                case 0:
+                    for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
+                        runCommand("MOV", `${vars[i]}`, "0000");
+                    }
+                    break;
+                case 1:
+                    for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
+                        runCommand("MOV", `${vars[i]}`, Math.floor(Math.random() * 65535).toString(16).toUpperCase().padStart(4, '0'));
+                    }
+                    break;
+                case 2:
+                    let values = [];
+                    let val = 0;
+                    let result = 0;
+                    for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
+                        val = document.getElementById(`table_input_${i}`).value;
+                        console.log(i + " " + val);
+                        result = hexRegex.test(val.padStart(4, '0')) ? val.padStart(4, '0') : "0000";
+                        console.log(result);
+                        values.push(result);
+                    }
+                    for (let i = tableId * 4; i < tableId * 4 + 4; i++) {
+                        runCommand("MOV", `${vars[i]}`, values[i - tableId * 4]);
+                    }
+                    break;
             }
         }
 

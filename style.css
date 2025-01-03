@@ -23,7 +23,6 @@ h2 {
 .default_table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
 }
 
     .default_table th, .default_table td {

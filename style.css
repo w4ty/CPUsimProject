@@ -48,7 +48,8 @@ button {
 }
 
     button:hover {
-        background-color: #9ea6ff;
+        background-color: black;
+        color: #fff;
     }
 
 .scroll-box {

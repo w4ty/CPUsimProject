@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=mop" />
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
@@ -38,7 +39,7 @@
                 </tr>
             </table>
             <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)"><span class="material-icons">delete</span></button>
-            <p>Stos (wskaźnik: <span id="stack_pointer"></span>): </p><div class="scroll-box"><span id="stack_return"></span></div>
+            <p>Stos (wskaźnik: <span id="stack_pointer"></span>): </p><div class="scroll-box"><span id="stack_return"></span></div><button type="button" name="clear_stack" id="clear_stack" value="Wyczyść"><span class="material-icons">delete</span></button>
         </div>
         <div id="operations" class="grid-item">
             <p>Pole komend</p>
@@ -80,8 +81,8 @@
             <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz adres jako drugi argument</button><br />
         </div>
         <div id="log" class="grid-item">
-            <p id="status_message">Log operacji: </p><div class="scroll-box autoscroll"><span id="operation_return"></span></div>
-            <p id="memory_message">Pamięć: </p><div class="scroll-box autoscroll"><span id="memory_return"></span></div>
+            <p id="status_message">Log operacji: </p><div class="scroll-box autoscroll"><span id="operation_return"></span></div><button type="button" name="clear_operation_log" id="clear_operation_log" value="Wyczyść"><span class="material-symbols-outlined">mop</span></button>
+            <p id="memory_message">Pamięć: </p><div class="scroll-box autoscroll"><span id="memory_return"></span></div><button type="button" name="clear_memory" id="clear_memory" value="Wyczyść"><span class="material-icons">delete</span></button>
         </div>
     </div>
     <script>

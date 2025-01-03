@@ -291,7 +291,7 @@
         }
 
         function insertVariableToInput(inputId, selectorId, isPointer = false) {
-            document.getElementById(`${inputId}`).value = `${isPointer ? "[" : ""}${document.getElementById(`${selectorId}`).value}${isPointer ? "+DISP]" : ""}`;
+            if(document.getElementById(`${selectorId}`).value !== "Wybierz tryb adresacji") document.getElementById(`${inputId}`).value = `${isPointer ? "[" : ""}${document.getElementById(`${selectorId}`).value}${isPointer ? "+DISP]" : ""}`;
         }
 
         function swapInputOrder() {

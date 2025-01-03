@@ -38,7 +38,7 @@
                 </tr>
             </table>
             <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)"><span class="material-icons">delete</span></button>
-            <p>Stos: </p><div class="scroll-box"><span id="stack_return"></span></div>
+            <p>Stos (wskaźnik: <span id="stack_pointer"></span>): </p><div class="scroll-box"><span id="stack_return"></span></div>
         </div>
         <div id="operations" class="grid-item">
             <p>Pole komend</p>
@@ -117,6 +117,7 @@
                 }
             }
             document.getElementById("stack_return").innerHTML = stackDisplay;
+            document.getElementById("stack_pointer").innerHTML = SP.toString(16).toUpperCase().padStart(4, '0');
 
             document.querySelectorAll(".autoscroll").forEach((element) => {
                 element.scrollTop = element.scrollHeight;

@@ -169,9 +169,13 @@
                 else if (operation == "XCHG") {
                     if (checkIfPointer(argSecond) && typeof (memory[`${hexMath(argSecond)}`]) !== "undefined") {
                         console.log(argSecond + " is pointer");
-                        let temp = memory[`${hexMath(argSecond)}`];
-                        memory[`${hexMath(argSecond)}`] = vars[`${argFirst}`];
-                        vars[`${argFirst}`] = temp;
+                        let memoryAddress = hexMath(argSecond);
+                        let temp = vars[`${argFirst}`];
+                        let lowByte = memory[`${memoryAddress}`] || "00";
+                        let highByte = memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] || "00";
+                        memory[`${memoryAddress}`] = temp.slice(2, 4);
+                        memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] = temp.slice(0, 2);
+                        vars[`${argFirst}`] = highByte + lowByte;
                         valid = true;
                     }
                     else if (!namingRegex.test(argSecond) || typeof (vars[`${argSecond}`]) === "undefined") {
@@ -227,10 +231,27 @@
                         if (typeof (memory[`${memoryAddress}`]) === "undefined") {
                             invalidArg = argSecond;
                         } else {
-                            let temp = memory[`${memoryAddress}`];
-                            memory[`${memoryAddress}`] = vars[`${argSecond}`];
-                            vars[`${argSecond}`] = temp;
-                            valid = true;
+                            let tempLowByte = memory[`${memoryAddress}`];
+                            let tempHighByte = memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`];
+                            if (checkIfPointer(argSecond)) {
+                                let secondMemoryAddress = hexMath(argSecond);
+                                if (hexRegex.test(secondMemoryAddress)) {
+                                    memory[`${memoryAddress}`] = memory[`${secondMemoryAddress}`];
+                                    memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] = memory[`${(parseInt(secondMemoryAddress, 16) + 1).toString(16).padStart(4, '0')}`];
+                                    memory[`${secondMemoryAddress}`] = tempLowByte;
+                                    memory[`${(parseInt(secondMemoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] = tempHighByte;
+                                    valid = true;
+                                } else {
+                                    invalidArg = argSecond;
+                                }
+                            } else {
+                                let lowByte = vars[`${argSecond}`].slice(2, 4);
+                                let highByte = vars[`${argSecond}`].slice(0, 2);
+                                memory[`${memoryAddress}`] = lowByte;
+                                memory[`${(parseInt(memoryAddress, 16) + 1).toString(16).padStart(4, '0')}`] = highByte;
+                                vars[`${argSecond}`] = tempHighByte + tempLowByte;
+                                valid = true;
+                            }
                         }
                     }
                     setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);

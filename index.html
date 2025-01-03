@@ -175,14 +175,18 @@
                     valid = true;
                     setOperationMessage(`${operation} ${argFirst}`);
                 } else if (operation == "POP") {
-                    let highByte = stack[SP + 1];
-                    let lowByte = stack[SP];
-                    vars[`${argFirst}`] = highByte + lowByte;
-                    delete stack[SP];
-                    delete stack[SP + 1];
-                    SP += 2;
-                    valid = true;
-                    setOperationMessage(`${operation} ${argFirst}`);
+                    if (Object.keys(stack).length > 0) {
+                        let highByte = stack[SP + 1];
+                        let lowByte = stack[SP];
+                        vars[`${argFirst}`] = highByte + lowByte;
+                        delete stack[SP];
+                        delete stack[SP + 1];
+                        SP += 2;
+                        valid = true;
+                        setOperationMessage(`${operation} ${argFirst}`);
+                    } else {
+                        setOperationMessage(`EMPTY STACK`);
+                    }
                 } else {
                     setOperationMessage(`${operation} ${argFirst}, ${typeof (vars[`${argSecond}`]) !== "undefined" ? argSecond : checkIfPointer(argSecond) ? argSecond : hexRegex.test(argSecond) ? argSecond : "0000"}`);
                 }

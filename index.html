@@ -90,6 +90,10 @@
         let SP = 0xFFFE;
         stack = {};
 
+        if (document.getElementById("commands").value == "PUSH" || document.getElementById("commands").value == "POP") {
+            toggleSecondArg(false);
+        }
+
         for (let i = 0; i < vars.length; i++) {
             vars[`${vars[i]}`] = "0000";
         }

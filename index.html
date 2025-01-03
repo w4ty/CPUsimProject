@@ -39,7 +39,7 @@
                 </tr>
             </table>
             <button type="button" name="empty_table" id="empty_second" value="Wyzeruj" onclick="emptyTable(1)"><span class="material-icons">delete</span></button>
-            <p>Stos (wskaźnik: <span id="stack_pointer"></span>): </p><div class="scroll-box"><span id="stack_return"></span></div><button type="button" name="clear_stack" id="clear_stack" value="Wyczyść"><span class="material-icons">delete</span></button>
+            <p>Stos (wskaźnik: <span id="stack_pointer"></span>): </p><div class="scroll-box"><span id="stack_return"></span></div><button type="button" name="clear_stack" id="clear_stack" value="Wyczyść" onclick="clearObject(stack, `STACK`); resetStackPointer()"><span class="material-icons">delete</span></button>
         </div>
         <div id="operations" class="grid-item">
             <p>Pole komend</p>
@@ -81,8 +81,8 @@
             <button type="button" name="insert_mem_add" id="insert_mem_add_second" value="Wpisz adres jako drugi argument" onclick="insertVariableToInput(`arg_second`, `memory_reg_selection`, true)">Wpisz adres jako drugi argument</button><br />
         </div>
         <div id="log" class="grid-item">
-            <p id="status_message">Log operacji: </p><div class="scroll-box autoscroll"><span id="operation_return"></span></div><button type="button" name="clear_operation_log" id="clear_operation_log" value="Wyczyść"><span class="material-symbols-outlined">mop</span></button>
-            <p id="memory_message">Pamięć: </p><div class="scroll-box autoscroll"><span id="memory_return"></span></div><button type="button" name="clear_memory" id="clear_memory" value="Wyczyść"><span class="material-icons">delete</span></button>
+            <p id="status_message">Log operacji: </p><div class="scroll-box autoscroll"><span id="operation_return"></span></div><button type="button" name="clear_operation_log" id="clear_operation_log" value="Wyczyść" onclick="clearOperationLog()"><span class="material-symbols-outlined">mop</span></button>
+            <p id="memory_message">Pamięć: </p><div class="scroll-box autoscroll"><span id="memory_return"></span></div><button type="button" name="clear_memory" id="clear_memory" value="Wyczyść" onclick="clearObject(memory, `MEMORY`)"><span class="material-icons">delete</span></button>
         </div>
     </div>
     <script>
@@ -301,6 +301,22 @@
 
         function toggleSecondArg(on) {
             document.getElementById("arg_second").disabled = !on;
+        }
+
+        function clearObject(object, name = "") {
+            for (var member in object) delete object[member];
+            setOperationMessage(`CLEARED ${name}`);
+            updateGUI();
+        }
+
+        function clearOperationLog() {
+            document.getElementById("operation_return").innerHTML = "";
+            updateGUI();
+        }
+
+        function resetStackPointer() {
+            SP = 0xFFFE;
+            updateGUI();
         }
 
         console.log(vars);

@@ -186,7 +186,7 @@
             document.getElementById("table_input_5").value = vars["DI"];
             document.getElementById("table_input_6").value = vars["SI"];
             document.getElementById("table_input_7").value = vars["DISP"];
-            document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>");
+            document.getElementById("memory_return").innerHTML = JSON.stringify(memory).replace("{", "").replace("}", "").replaceAll("\"", "").replaceAll(",", "<br>").toUpperCase();
 
             let stackDisplay = "";
             for (let key in stack) {
@@ -333,14 +333,15 @@
 
             calculation = calculation.replaceAll(" ", "").replaceAll("[", "").replaceAll("]", "");
             components = calculation.split("+");
+            let sum = 0;
+
             for (let i = 0; i < components.length; i++) {
                 if ((typeof (vars[`${components[i]}`]) !== "undefined" && namingRegex.test(components[i]))) {
                     components[i] = vars[`${components[i]}`];
                 }
+                sum += parseInt(components[i], 16);
             }
-            calculation = components.reduce((a, b) => parseInt(a, 16) + parseInt(b, 16)).toString(16);
-            console.log(components);
-            return calculation.padStart(4, '0');
+            return sum.toString(16).toUpperCase().padStart(4, '0');
         }
         function setTable(tableId, mode = 0) {
             switch (mode) {

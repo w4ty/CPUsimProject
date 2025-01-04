@@ -13,39 +13,63 @@
     <div class="centered-flex"><button type="button" name="manual" id="manual_button" onclick="toggleManual()"><span class="material-icons">menu_book</span> Instrukcja</button></div>
     <div class="manual-background display-none"></div>
     <div class="manual-div display-none">
-        <button type="button" name="close_manual" class="close-man-button" id="close_manual" onclick="toggleManual()"><span class="material-icons">cancel</span></button>
         <h2>Instrukcja</h2>
-        <h4>Witaj w symulatorze podstawowych instrukcji x86! Poniżej znajdziesz opis funkcji programu:</h4>
-        <ul>
-            <li>
-                <strong>MOV - przenosi wartość z jednej zmiennej do drugiej</strong><br />
+        <button type="button" name="close_manual" class="close-man-button" id="close_manual" onclick="toggleManual()"><span class="material-icons">cancel</span></button>
+        <div class="scroll-box-man">
+            <h4>Witaj w symulatorze podstawowych instrukcji x86! Poniżej znajdziesz opis funkcji programu:</h4>
+            <a href="https://github.com/w4ty/CPUsimProject">Link do repozytorium</a><br />
+            <a href="">Link do sprawozdania projektowego</a>
+            <ul>
+                <li>
+                    <strong>MOV - przenosi wartość z jednej zmiennej do drugiej</strong><br />
                     Przyjmuje dwa argumenty: MOV ARG1, ARG2<br />
                     ARG1 - zmienna, do której przenosimy wartość<br />
                     Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI<br />
                     ARG2 - zmienna, z której przenosimy wartość<br />
                     Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI
-            </li>
-            <li>
-                <strong>XCHG - zamienia wartości dwóch zmiennych</strong><br />
-                Przyjmuje dwa argumenty: XCHG ARG1, ARG2<br />
-                ARG1 - zmienna, do której przenosimy wartość<br />
-                Dozwolone typy: REJESTR, ADRES PAMIĘCI<br />
-                ARG2 - zmienna, z której przenosimy wartość<br />
-                Dozwolone typy: REJESTR, ADRES PAMIĘCI
-            </li>
-            <li>
-                <strong>PUSH - wrzuca wartość zmiennej na stos</strong><br />
-                Przyjmuje jeden argument: PUSH ARG1<br />
-                ARG1 - zmienna, którą wrzucamy na stos<br />
-                Dozwolone typy: REJESTR
-            </li>
-            <li>
-                <strong>POP - zdejmuje wartość ze stosu i przypisuje ją do zmiennej</strong><br />
-                Przyjmuje jeden argument: POP ARG1<br />
-                ARG1 - zmienna, do której przypisujemy wartość ze stosu<br />
-                Dozwolone typy: REJESTR
-            </li>
-        </ul>
+                </li>
+                <li>
+                    <strong>XCHG - zamienia wartości dwóch zmiennych</strong><br />
+                    Przyjmuje dwa argumenty: XCHG ARG1, ARG2<br />
+                    ARG1 - zmienna, do której przenosimy wartość<br />
+                    Dozwolone typy: REJESTR, ADRES PAMIĘCI<br />
+                    ARG2 - zmienna, z której przenosimy wartość<br />
+                    Dozwolone typy: REJESTR, ADRES PAMIĘCI
+                </li>
+                <li>
+                    <strong>PUSH - wrzuca wartość zmiennej na stos</strong><br />
+                    Przyjmuje jeden argument: PUSH ARG1<br />
+                    ARG1 - zmienna, którą wrzucamy na stos<br />
+                    Dozwolone typy: REJESTR
+                </li>
+                <li>
+                    <strong>POP - zdejmuje wartość ze stosu i przypisuje ją do zmiennej</strong><br />
+                    Przyjmuje jeden argument: POP ARG1<br />
+                    ARG1 - zmienna, do której przypisujemy wartość ze stosu<br />
+                    Dozwolone typy: REJESTR
+                </li>
+            </ul>
+
+            <h4>Oznaczenia typów w polu argumentów: </h4>
+            <ul>
+                <li>
+                    <strong>REJESTR</strong> - AX, BX, CX, DX, BP, DI, SI, DISP<br />
+                    Wielkość liter ma znaczenie
+                </li>
+                <li>
+                    <strong>WARTOŚĆ (HEXADECYMALNA)</strong> - 0000 - FFFF<br />
+                    Wartość musi być zapisana w formacie heksadecymalnym oraz zawsze musi składać się z 4 znaków, przykładowo: 0000, 0001, 00FF<br />
+                    Wielkość liter nie ma znaczenia
+                </li>
+                <li>
+                    <strong>ADRES PAMIĘCI</strong> - [DI], [SI], [BX], [BP], [SI+BX], [SI+BP], [DI+BX], [DI+BP]<br />
+                    Program pozwala na własne wyliczenie adresu pamięci używając liczb heksadecymalnych i operatora "+"<br />
+                    np. [0002 + 0002 + 0002] - adres pamięci 0006<br />
+                    W obliczeniach można mieszać rejestry i wartości heksadecymalne<br />
+                    np. [SI + 0002 + BP] - adres pamięci będzie wyliczony z wartości zawartej w rejestrze SI, wartości 0002 oraz wartości zawartej w rejestrze BP
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="grid-container">
         <div id="variable_table" class="grid-item">

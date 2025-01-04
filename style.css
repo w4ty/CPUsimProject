@@ -108,3 +108,38 @@ label {
     align-items: center;
     justify-content: center;
 }
+.display-none {
+    display: none;
+}
+.manual-div {
+    width: 50%;
+    background-color: #fff;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    box-shadow: 0 4px 8px black;
+    margin-top: 20px;
+    padding: 20px;
+}
+.close-man-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.manual-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+li {
+    padding-bottom: 20px;
+}
+span{
+    vertical-align: middle;
+}

@@ -10,6 +10,43 @@
 </head>
 <body>
     <h2>Symulator podstawowych instrukcji x86 - Bruno Talaga</h2>
+    <div class="centered-flex"><button type="button" name="manual" id="manual_button" onclick="toggleManual()"><span class="material-icons">menu_book</span> Instrukcja</button></div>
+    <div class="manual-background display-none"></div>
+    <div class="manual-div display-none">
+        <button type="button" name="close_manual" class="close-man-button" id="close_manual" onclick="toggleManual()"><span class="material-icons">cancel</span></button>
+        <h2>Instrukcja</h2>
+        <h4>Witaj w symulatorze podstawowych instrukcji x86! Poniżej znajdziesz opis funkcji programu:</h4>
+        <ul>
+            <li>
+                <strong>MOV - przenosi wartość z jednej zmiennej do drugiej</strong><br />
+                    Przyjmuje dwa argumenty: MOV ARG1, ARG2<br />
+                    ARG1 - zmienna, do której przenosimy wartość<br />
+                    Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI<br />
+                    ARG2 - zmienna, z której przenosimy wartość<br />
+                    Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI
+            </li>
+            <li>
+                <strong>XCHG - zamienia wartości dwóch zmiennych</strong><br />
+                Przyjmuje dwa argumenty: XCHG ARG1, ARG2<br />
+                ARG1 - zmienna, do której przenosimy wartość<br />
+                Dozwolone typy: REJESTR, ADRES PAMIĘCI<br />
+                ARG2 - zmienna, z której przenosimy wartość<br />
+                Dozwolone typy: REJESTR, ADRES PAMIĘCI
+            </li>
+            <li>
+                <strong>PUSH - wrzuca wartość zmiennej na stos</strong><br />
+                Przyjmuje jeden argument: PUSH ARG1<br />
+                ARG1 - zmienna, którą wrzucamy na stos<br />
+                Dozwolone typy: REJESTR
+            </li>
+            <li>
+                <strong>POP - zdejmuje wartość ze stosu i przypisuje ją do zmiennej</strong><br />
+                Przyjmuje jeden argument: POP ARG1<br />
+                ARG1 - zmienna, do której przypisujemy wartość ze stosu<br />
+                Dozwolone typy: REJESTR
+            </li>
+        </ul>
+    </div>
     <div class="grid-container">
         <div id="variable_table" class="grid-item">
             <p>Tabela wartości</p>
@@ -373,6 +410,13 @@
         function resetStackPointer() {
             SP = 0xFFFE;
             updateGUI();
+        }
+
+        function toggleManual() {
+            let manualDiv = document.querySelector(".manual-div");
+            let manualBackground = document.querySelector(".manual-background");
+            manualDiv.classList.toggle("display-none");
+            manualBackground.classList.toggle("display-none");
         }
 
         console.log(vars);

@@ -149,6 +149,10 @@ label {
 li {
     padding-bottom: 20px;
 }
-span{
+span {
     vertical-align: middle;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
 }

@@ -156,3 +156,14 @@ a {
     color: #007bff;
     text-decoration: none;
 }
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+    .dark-mode button {
+        background-color: black;
+        color: #fff;
+    }
+    .dark-mode div {
+        background-color: black;
+    }

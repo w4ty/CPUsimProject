@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=mop&display=block" />
+    <link rel="stylesheet" href="style.css">
     <title>Projekt zaliczeniowy - Bruno Talaga</title>
 </head>
 <body>
+    <button name="mode_toggle" id="mode_toggle" onclick="toggleDarkMode()"><span class="material-icons">dark_mode</span><span class="material-icons display-none">light_mode</span></button>
     <h2>Symulator podstawowych instrukcji x86 - Bruno Talaga</h2>
     <div class="centered-flex"><button type="button" name="manual" id="manual_button" onclick="toggleManual()"><span class="material-icons">menu_book</span> Instrukcja</button></div>
     <div class="manual-background display-none"></div>
@@ -442,6 +443,15 @@
             let manualBackground = document.querySelector(".manual-background");
             manualDiv.classList.toggle("display-none");
             manualBackground.classList.toggle("display-none");
+        }
+
+        function toggleDarkMode() {
+            let body = document.querySelector("body");
+            //let icons = modeToggle.querySelectorAll("span");
+            body.classList.toggle("dark-mode");
+            /*icons.forEach((icon) => {
+                icon.classList.toggle("display-none");
+            });*/
         }
 
         console.log(vars);

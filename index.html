@@ -163,6 +163,8 @@
         vars = ["AX", "BX", "CX", "DX", "BP", "DI", "SI", "DISP"];
         let SP = 0xFFFE;
         stack = {};
+        let darkmodeCookie = document.cookie.replace(/(?:(?:^|.*;\s*)darkmode\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+        if (darkmodeCookie == "true") toggleDarkMode();
 
         if (document.getElementById("commands").value == "PUSH" || document.getElementById("commands").value == "POP") {
             toggleSecondArg(false);
@@ -448,6 +450,9 @@
         function toggleDarkMode() {
             let body = document.querySelector("body");
             body.classList.toggle("dark-mode");
+            let now = new Date();
+            now.setMonth(now.getMonth() + 1);
+            document.cookie = "darkmode=" + body.classList.contains("dark-mode")+";expires=" + now.toUTCString();
         }
 
         console.log(vars);

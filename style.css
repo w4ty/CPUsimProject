@@ -157,11 +157,11 @@ a {
     text-decoration: none;
 }
 .dark-mode {
-    background-color: #333;
+    background-color: #121212;
     color: #fff;
 }
     .dark-mode button {
-        background-color: black;
+        background-color: #0c0c0c;
         color: #fff;
     }
         .dark-mode button:hover {
@@ -169,7 +169,7 @@ a {
             color: black;
         }
     .dark-mode .grid-container .grid-item {
-        background-color: black;
+        background-color: #0c0c0c;
     }
     .dark-mode th {
         background-color: #333;
@@ -185,8 +185,8 @@ a {
     .dark-mode h2 {
         color: #fff;
     }
-    .dark-mode .manual-div{
-        background-color: black;
+    .dark-mode .manual-div {
+        background-color: #1d1d1d;
     }
     .dark-mode .scroll-box-man {
         background-color: #292929;

@@ -185,3 +185,12 @@ a {
     .dark-mode h2 {
         color: #fff;
     }
+    .dark-mode .manual-div{
+        background-color: black;
+    }
+    .dark-mode .scroll-box-man {
+        background-color: #292929;
+    }
+    .dark-mode a {
+        color: #4ba2ff;
+    }

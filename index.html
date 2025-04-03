@@ -31,12 +31,13 @@
         id="manual_button"
         onclick="toggleManual()"
       >
-        <span class="material-icons">menu_book</span> Instrukcja
+        <span class="material-icons">menu_book</span>
+        <span id="loc_manual">Instrukcja</span>
       </button>
     </div>
     <div class="manual-background display-none"></div>
     <div class="manual-div display-none">
-      <h2>Instrukcja</h2>
+      <h2 id="loc_manual_head2">Instrukcja</h2>
       <button
         type="button"
         name="close_manual"
@@ -47,80 +48,80 @@
         <span class="material-icons">cancel</span>
       </button>
       <div class="scroll-box-man">
-        <h4>
+        <h4 id="loc_manual_head4">
           Witaj w symulatorze podstawowych instrukcji x86! Poniżej znajdziesz
           opis funkcji programu:
         </h4>
         <a href="https://github.com/w4ty/CPUsimProject" target="_blank"
-          >Link do repozytorium</a
+          ><span id="loc_repository">Link do repozytorium</span></a
         ><br />
         <a href="./docs/Sprawozdanie.pdf" target="_blank"
-          >Link do sprawozdania projektowego</a
+          ><span id="loc_documentation">Link do sprawozdania projektowego</span></a
         >
         <ul>
           <li>
-            <strong>MOV - przenosi wartość z jednej zmiennej do drugiej</strong
+            <strong id="loc_mov_strong">MOV - przenosi wartość z jednej zmiennej do drugiej</strong
             ><br />
-            Przyjmuje dwa argumenty: MOV ARG1, ARG2<br />
-            ARG1 - zmienna, do której przenosimy wartość<br />
-            Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI<br />
-            ARG2 - zmienna, z której przenosimy wartość<br />
-            Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI
+            <span id="loc_mov_args_line1">Przyjmuje dwa argumenty: MOV ARG1, ARG2</span><br />
+            <span id="loc_mov_args_line2">ARG1 - zmienna, do której przenosimy wartość</span><br />
+            <span id="loc_mov_args_line3">Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI</span><br />
+            <span id="loc_mov_args_line4">ARG2 - zmienna, z której przenosimy wartość</span><br />
+            <span id="loc_mov_args_line5">Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI</span>
           </li>
           <li>
-            <strong>XCHG - zamienia wartości dwóch zmiennych</strong><br />
-            Przyjmuje dwa argumenty: XCHG ARG1, ARG2<br />
-            ARG1 - zmienna, do której przenosimy wartość<br />
-            Dozwolone typy: REJESTR, ADRES PAMIĘCI<br />
-            ARG2 - zmienna, z której przenosimy wartość<br />
-            Dozwolone typy: REJESTR, ADRES PAMIĘCI
+            <strong id="loc_xchg_strong">XCHG - zamienia wartości dwóch zmiennych</strong><br />
+            <span id="loc_xchg_args_line1">Przyjmuje dwa argumenty: XCHG ARG1, ARG2</span><br />
+            <span id="loc_xchg_args_line2">ARG1 - zmienna, do której przenosimy wartość</span><br />
+            <span id="loc_xchg_args_line3">Dozwolone typy: REJESTR, ADRES PAMIĘCI</span><br />
+            <span id="loc_xchg_args_line4">ARG2 - zmienna, z której przenosimy wartość</span><br />
+            <span id="loc_xchg_args_line5">Dozwolone typy: REJESTR, ADRES PAMIĘCI</span>
           </li>
           <li>
-            <strong>PUSH - wrzuca wartość zmiennej na stos</strong><br />
-            Przyjmuje jeden argument: PUSH ARG1<br />
-            ARG1 - zmienna, którą wrzucamy na stos<br />
-            Dozwolone typy: REJESTR
+            <strong id="loc_push_strong">PUSH - wrzuca wartość zmiennej na stos</strong><br />
+            <span id="loc_push_args_line1">Przyjmuje jeden argument: PUSH ARG1</span><br />
+            <span id="loc_push_args_line2">ARG1 - zmienna, którą wrzucamy na stos</span><br />
+            <span id="loc_push_args_line3">Dozwolone typy: REJESTR</span>
           </li>
           <li>
-            <strong
+            <strong id="loc_pop_strong"
               >POP - zdejmuje wartość ze stosu i przypisuje ją do
               zmiennej</strong
             ><br />
-            Przyjmuje jeden argument: POP ARG1<br />
-            ARG1 - zmienna, do której przypisujemy wartość ze stosu<br />
-            Dozwolone typy: REJESTR
+            <span id="loc_pop_args_line1">Przyjmuje jeden argument: POP ARG1</span><br />
+            <span id="loc_pop_args_line2">ARG1 - zmienna, do której przypisujemy wartość ze stosu</span><br />
+            <span id="loc_pop_args_line3">Dozwolone typy: REJESTR</span>
           </li>
         </ul>
 
-        <h4>Oznaczenia typów w polu argumentów:</h4>
+        <h4 id="loc_arg_types_head4">Oznaczenia typów w polu argumentów:</h4>
         <ul>
           <li>
-            <strong>REJESTR</strong> - AX, BX, CX, DX, BP, DI, SI, DISP<br />
-            Wielkość liter ma znaczenie
+            <strong id="loc_register_strong">REJESTR</strong> - AX, BX, CX, DX, BP, DI, SI, DISP<br />
+            <span id="loc_letter_case_matters">Wielkość liter ma znaczenie</span>
           </li>
           <li>
-            <strong>WARTOŚĆ (HEXADECYMALNA)</strong> - 0000 - FFFF<br />
-            Wartość musi być zapisana w formacie heksadecymalnym oraz zawsze
-            musi składać się z 4 znaków, przykładowo: 0000, 0001, 00FF<br />
-            Wielkość liter nie ma znaczenia
+            <strong id="loc_hex_value_strong">WARTOŚĆ (HEXADECYMALNA)</strong> - 0000 - FFFF<br />
+            <span id="loc_value_desc">Wartość musi być zapisana w formacie heksadecymalnym oraz zawsze
+            musi składać się z 4 znaków, przykładowo: 0000, 0001, 00FF</span><br />
+            <span id="loc_letter_case_doesnt_matter">Wielkość liter nie ma znaczenia</span>
           </li>
           <li>
-            <strong>ADRES PAMIĘCI</strong> - [DI], [SI], [BX], [BP], [SI+BX],
+            <strong id="loc_memory_address_strong">ADRES PAMIĘCI</strong> - [DI], [SI], [BX], [BP], [SI+BX],
             [SI+BP], [DI+BX], [DI+BP]<br />
-            Program pozwala na własne wyliczenie adresu pamięci używając liczb
-            heksadecymalnych i operatora "+"<br />
-            np. [0002 + 0002 + 0002] - adres pamięci 0006<br />
-            W obliczeniach można mieszać rejestry i wartości heksadecymalne<br />
-            np. [SI + 0002 + BP] - adres pamięci będzie wyliczony z wartości
+            <span id="loc_address_calc_info_line1">Program pozwala na własne wyliczenie adresu pamięci używając liczb
+            heksadecymalnych i operatora "+"</span><br />
+            <span id="loc_address_calc_info_line2">np. [0002 + 0002 + 0002] - adres pamięci 0006</span><br />
+            <span id="loc_address_calc_info_line3">W obliczeniach można mieszać rejestry i wartości heksadecymalne</span><br />
+            <span id="loc_address_calc_info_line4">np. [SI + 0002 + BP] - adres pamięci będzie wyliczony z wartości
             zawartej w rejestrze SI, wartości 0002 oraz wartości zawartej w
-            rejestrze BP
+            rejestrze BP</span>
           </li>
         </ul>
       </div>
     </div>
     <div class="grid-container">
       <div id="variable_table" class="grid-item">
-        <p>Tabela wartości</p>
+        <p id="loc_values_table">Tabela wartości</p>
         <table class="default_table">
           <tr>
             <th>AX</th>
@@ -258,7 +259,7 @@
         >
           <span class="material-icons">edit</span>
         </button>
-        <p>Stos (wskaźnik: <span id="stack_pointer"></span>):</p>
+        <p><span id="loc_stack">Stos</span> (<span id="loc_pointer">wskaźnik</span>: <span id="stack_pointer"></span>):</p>
         <div class="scroll-box"><span id="stack_return"></span></div>
         <button
           type="button"
@@ -271,7 +272,7 @@
         </button>
       </div>
       <div id="operations" class="grid-item">
-        <p>Pole komend</p>
+        <p id="loc_commands">Pole komend</p>
         <div class="centered-flex">
           <select name="variable_help" id="variable_help">
             <option value="AX">AX</option>
@@ -334,7 +335,7 @@
             <span class="material-icons">play_circle</span>
           </button>
         </div>
-        <p>Tryb adresowania pamięci:</p>
+        <p id="loc_memory_mode">Tryb adresowania pamięci:</p>
         <input
           type="radio"
           name="memory_address_mode"
@@ -342,7 +343,7 @@
           value="Indeksowy"
           onclick="updateMemoryRegSelection(this.value)"
         />
-        <label for="mem_add_indeksowy">Indeksowy</label>
+        <label for="mem_add_indeksowy" id="loc_indexed">Indeksowy</label>
         <input
           type="radio"
           name="memory_address_mode"
@@ -350,7 +351,7 @@
           value="Bazowy"
           onclick="updateMemoryRegSelection(this.value)"
         />
-        <label for="mem_add_bazowy">Bazowy</label>
+        <label for="mem_add_bazowy" id="loc_based">Bazowy</label>
         <input
           type="radio"
           name="memory_address_mode"
@@ -358,11 +359,11 @@
           value="Indeksowo-bazowy"
           onclick="updateMemoryRegSelection(this.value)"
         />
-        <label for="mem_add_indeksowo-bazowy">Indeksowo-bazowy</label
+        <label for="mem_add_indeksowo-bazowy" id="loc_based_indexed">Indeksowo-bazowy</label
         ><br /><br />
         <div class="centered-flex">
           <select name="memory_reg_selection" id="memory_reg_selection">
-            <option value="Wybierz tryb adresacji">
+            <option value="Wybierz tryb adresacji" id="loc_select_memory_mode">
               Wybierz tryb adresacji
             </option>
           </select>
@@ -402,7 +403,7 @@
         >
           <span class="material-symbols-outlined">mop</span>
         </button>
-        <p id="memory_message">Pamięć:</p>
+        <p id="memory_message"><span id="loc_memory">Pamięć</span>:</p>
         <div class="scroll-box autoscroll">
           <span id="memory_return"></span>
         </div>

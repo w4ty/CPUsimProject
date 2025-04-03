@@ -7,6 +7,14 @@ let darkmodeCookie = document.cookie.replace(
 );
 if (darkmodeCookie == "true") toggleDarkMode();
 
+let languageCookie = document.cookie.replace(
+    /(?:(?:^|.*;\s*)language\s*\=\s*([^;]*).*$)|^.*$/,
+    "$1"
+);
+if (languageCookie) {
+    setLanguage(languageCookie);
+}
+
 if (
   document.getElementById("commands").value == "PUSH" ||
   document.getElementById("commands").value == "POP"
@@ -395,6 +403,13 @@ function toggleDarkMode() {
 
 function setLanguage(language) {
     console.log(language);
+    let now = new Date();
+    now.setMonth(now.getMonth() + 1);
+    document.cookie +=
+        "language=" +
+        language +
+        ";expires=" +
+        now.toUTCString();
     let fileToFetch = `./localization/${language}.json`;
     fetch(fileToFetch)
         .then(response => response.json())

@@ -10,6 +10,7 @@
   "loc_stack": "Stos",
   "loc_pointer": "Wskaźnik",
   "loc_commands": "Pole komend",
+  "loc_operation_log": "Log operacji",
   "loc_memory_mode": "Tryb adresowania pamięci",
   "loc_indexed": "Indeksowy",
   "loc_based": "Bazowy",

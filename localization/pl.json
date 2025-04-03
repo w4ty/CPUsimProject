@@ -6,7 +6,7 @@
   "loc_manual_head4": "Witaj w symulatorze podstawowych instrukcji x86! Poniżej znajdziesz opis funkcji programu:",
   "loc_repository": "Link do repozytorium",
   "loc_documentation": "Link do sprawozdania projektowego",
-  "loc_values_table": "Tabela wartości",
+  "loc_values_table": "Tabela wartości:",
   "loc_stack": "Stos",
   "loc_pointer": "Wskaźnik",
   "loc_commands": "Pole komend",
@@ -25,9 +25,9 @@
   "loc_mov_args_line5": "Dozwolone typy: REJESTR, WARTOŚĆ (HEXADECYMALNA), ADRES PAMIĘCI",
   "loc_xchg_strong": "XCHG - zamienia wartości dwóch zmiennych",
   "loc_xchg_args_line1": "Przyjmuje dwa argumenty: XCHG ARG1, ARG2",
-  "loc_xchg_args_line2": "ARG1 - zmienna, do której przenosimy wartość",
+  "loc_xchg_args_line2": "ARG1 - zmienna, która dostanie wartość drugiego argumentu",
   "loc_xchg_args_line3": "Dozwolone typy: REJESTR, ADRES PAMIĘCI",
-  "loc_xchg_args_line4": "ARG2 - zmienna, z której przenosimy wartość",
+  "loc_xchg_args_line4": "ARG2 - zmienna, która dostanie wartość pierwszego argumentu",
   "loc_xchg_args_line5": "Dozwolone typy: REJESTR, ADRES PAMIĘCI",
   "loc_push_strong": "PUSH - wrzuca wartość zmiennej na stos",
   "loc_push_args_line1": "Przyjmuje jeden argument: PUSH ARG1",
@@ -45,7 +45,7 @@
   "loc_letter_case_doesnt_matter": "Wielkość liter nie ma znaczenia",
   "loc_memory_address_strong": "ADRES PAMIĘCI",
   "loc_address_calc_info_line1": "Program pozwala na własne wyliczenie adresu pamięci używając liczb heksadecymalnych i operatora \"+\"",
-  "loc_address_calc_info_line2": "np. [0002 + 0002 + 0002] - adres pamięci 0006",
+  "loc_address_calc_info_line2": "np. [0002 + 0002 + 0002] = adres pamięci 0006",
   "loc_address_calc_info_line3": "W obliczeniach można mieszać rejestry i wartości heksadecymalne",
-  "loc_address_calc_info_line4": "np. [SI + 0002 + BP] - adres pamięci będzie wyliczony z wartości zawartej w rejestrze SI, wartości 0002 oraz wartości zawartej w rejestrze BP"
+  "loc_address_calc_info_line4": "np. [SI + 0002 + BP] = adres pamięci będzie wyliczony z wartości zawartej w rejestrze SI, wartości 0002 oraz wartości zawartej w rejestrze BP"
 }

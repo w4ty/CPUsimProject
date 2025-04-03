@@ -393,5 +393,24 @@ function toggleDarkMode() {
     now.toUTCString();
 }
 
+function setLanguage(language) {
+    console.log(language);
+    let fileToFetch = `./localization/${language}.json`;
+    fetch(fileToFetch)
+        .then(response => response.json())
+        .then(data => {
+            let translations = data;
+            document.querySelectorAll("[id^='loc_']").forEach(element => {
+                let key = element.id;
+                if (translations[key]) {
+                    element.innerHTML = translations[key];
+                }
+            });
+        })
+        .catch(error => console.error('Error loading translations:', error));
+
+}
+
 console.log(vars);
 updateGUI();
+setLanguage("pl");

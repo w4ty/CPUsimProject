@@ -29,6 +29,11 @@ for (let i = 0; i < vars.length; i++) {
 memory = {};
 hexRegex = /^[0-9a-fA-F]{4}$/;
 namingRegex = /^[A-Z]+$/;
+ 
+document.getElementById("language_select").onchange = function () {
+    setLanguage(this.value);
+}
+
 function setOperationMessage(message) {
   document.getElementById("operation_return").innerHTML += message + "<br>";
 }
@@ -391,25 +396,13 @@ function toggleManual() {
 
 function toggleDarkMode() {
   let body = document.querySelector("body");
-  body.classList.toggle("dark-mode");
-  let now = new Date();
-  now.setMonth(now.getMonth() + 1);
-  document.cookie =
-    "darkmode=" +
-    body.classList.contains("dark-mode") +
-    ";expires=" +
-    now.toUTCString();
+    body.classList.toggle("dark-mode");
+    updateCookies();
 }
 
 function setLanguage(language) {
     console.log(language);
-    let now = new Date();
-    now.setMonth(now.getMonth() + 1);
-    document.cookie +=
-        "language=" +
-        language +
-        ";expires=" +
-        now.toUTCString();
+    updateCookies();
     let fileToFetch = `./localization/${language}.json`;
     fetch(fileToFetch)
         .then(response => response.json())
@@ -426,6 +419,19 @@ function setLanguage(language) {
 
 }
 
+function updateCookies() {
+    let now = new Date();
+    now.setMonth(now.getMonth() + 1);
+    document.cookie =
+        "darkmode=" +
+        document.querySelector("body").classList.contains("dark-mode") +
+        ";expires=" +
+        now.toUTCString();
+    document.cookie = "language=" +
+        document.getElementById("language_select").value +
+        ";expires=" +
+        now.toUTCString();
+}
+
 console.log(vars);
 updateGUI();
-setLanguage("pl");
